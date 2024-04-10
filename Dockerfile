@@ -114,4 +114,3 @@ RUN chmod +x init_git_ssh.sh
 #Sleep for ever
 ENTRYPOINT [ "init_git_ssh.sh" ]
 CMD ["sleep", "infinity"]
-
