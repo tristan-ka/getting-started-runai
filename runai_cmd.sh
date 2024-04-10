@@ -1,0 +1,11 @@
+runai submit \
+        --name exp \
+        --interactive \
+        --gpu 1 \
+        --image ic-registry.epfl.ch/dhlab/llm-exploration:latest \
+        --pvc runai-dhlab-tkarch-data1:/home/tkarch/dhlab-data  \
+        --service-type=portforward --port 2222:22 \
+        --environment EPFML_LDAP=tkarch \
+        --environment USER_NAME=tkarch \
+        --environment USER_ID=125666 \
+        --command -- ./init_git_ssh.sh sleep infinity
