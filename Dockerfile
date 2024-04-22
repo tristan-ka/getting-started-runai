@@ -87,7 +87,7 @@ RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh
 RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
 ENV NOTVISIBLE="in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
-RUN echo '${USER_NAME}:${USER_NAME}' | chpasswd
+RUN echo "${USER_NAME}:${USER_NAME}" | chpasswd
 EXPOSE 22
 
 #Set the working directory
@@ -106,8 +106,11 @@ ENV PATH="/home/${USER_NAME}/.conda/envs/myenv/bin:$PATH"
 ENV PATH="/home/${USER_NAME}/.conda/envs/myenv/bin:/home/${USER_NAME}/.local/bin:$PATH"
 # ENV PATH="/home/${USER_NAME}/.conda/condabin/:$PATH"
 
-ENV STORE="/home/tkarch/dhlab-data/data/tkarch-data"
 ENV HF_HOME="/home/${USER_NAME}/dhlab-data/data/tkarch-data/.cache/"
+
+# Env variables for shortcuts
+ENV STORE="/home/tkarch/dhlab-data/data/tkarch-data"
+ENV GITSOURCE="git@github.com:tristan-ka/open-question-generator.git"
 
 RUN chmod +x init_git_ssh.sh
 
