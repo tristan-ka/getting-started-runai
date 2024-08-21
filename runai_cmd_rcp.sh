@@ -6,11 +6,11 @@ WANDB_API_KEY=`python -c "import wandb; print(wandb.api.api_key)"`
 
 runai submit \
         --name exp \
-        --gpu 2 \
-        --cpu 1 --cpu-limit 1 --memory 64G --memory-limit 64G \
+        --interactive \
+        --gpu 1 \
+        --cpu 2 --cpu-limit 2 --memory 80G --memory-limit 80G \
         --image ic-registry.epfl.ch/dhlab/llm-exploration:interactive \
-        --pvc runai-dhlab-tkarch-data1:/home/tkarch/dhlab-data  \
-        --pvc runai-dhlab-tkarch-scratch:/home/tkarch/scratch \
+        --pvc dhlab-scratch:/home/tkarch/scratch \
         --environment EPFML_LDAP=tkarch \
         --environment USER_NAME=tkarch \
         --environment USER_ID=125666 \

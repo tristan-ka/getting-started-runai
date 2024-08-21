@@ -53,17 +53,24 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     rm miniconda.sh && \
     ${CONDA} config --set auto_activate_base false && \
     ${CONDA} init bash && \
-    ${CONDA} create --name myenv python=3.11
+    ${CONDA} create --name myenv python=3.10
 
 ENV PATH="/home/${USER_NAME}/.conda/envs/myenv/bin:$PATH"
 
-RUN /home/${USER_NAME}/.conda/condabin/conda create -n myenv python=3.11 pip
+RUN /home/${USER_NAME}/.conda/condabin/conda create -n myenv python=3.10 pip
 
 RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install --upgrade pip setuptools
 RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install numpy scipy \
     scikit-learn pandas sentencepiece
 RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install torch
-RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install transformers accelerate
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install wandb
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install transformers==4.41.0 accelerate datasets peft 
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install langchain-community langchain-core sentence-transformers faiss-gpu einops
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install bitsandbytes>=0.39.0 # to allow 4-bit quantization
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install --upgrade accelerate transformers==4.41.0
+RUN /home/${USER_NAME}/.conda/condabin/conda run -n myenv pip install hydra-core --upgrade
+
+
 
 # Update PATH environment variable and install updates and required packages
 # Note: Using Docker, we don't typically use 'export' for setting ENV variables, instead, we use the ENV instruction
@@ -106,7 +113,7 @@ ENV PATH="/home/${USER_NAME}/.conda/envs/myenv/bin:$PATH"
 ENV PATH="/home/${USER_NAME}/.conda/envs/myenv/bin:/home/${USER_NAME}/.local/bin:$PATH"
 # ENV PATH="/home/${USER_NAME}/.conda/condabin/:$PATH"
 
-ENV HF_HOME="/home/${USER_NAME}/dhlab-data/data/tkarch-data/.cache/"
+ENV HF_HOME="/home/${USER_NAME}/scratch/tkarch/.cache/"
 
 # Env variables for shortcuts
 ENV STORE="/home/tkarch/dhlab-data/data/tkarch-data"
